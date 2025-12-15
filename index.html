@@ -41,21 +41,29 @@
   </style>
 </head>
 
+  <!-- Proxy -->
+  <button class="button-16" onclick="openExternal('https://ebn.s4r4.com/')">
+    Proxy
+  </button>
 
-<body>
-<button class="button-16" onclick="myFunction()">proxy</button>
+  <!-- Local games -->
+  <button class="button-16" onclick="openGame('/games/balatro/index.html')">
+    Balatro
+  </button>
 
-
-<button class="button-16" onclick="openGame('https://a-bc2.vercel.app/games/balatro/index.html')">balatro</button>
-
-<button class="button-16" onclick="openGame('https://example.com/game3/')">
-  Game 3
-</button>
+  <button class="button-16" onclick="openGame('/games/game3/index.html')">
+    Game 3
+  </button>
 
   <script>
-    function myFunction() {
-      const url = "https://ebn.s4r4.com/";
+    function openGame(path) {
+      const url = encodeURIComponent(path);
+      window.open(`/play.html?url=${url}`, "_blank");
+    }
 
+    function openExternal(url) {
+      const encoded = encodeURIComponent(url);
+      window.open(`/play.html?url=${encoded}`, "_blank");
 
       const win = window.open("", "_blank");
       win.document.write(`
