@@ -12,6 +12,22 @@
       padding: 20px;
     }
 
+    /* SEARCH BAR */
+    .search-container {
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: center;
+    }
+
+    #searchInput {
+      padding: 10px;
+      width: 100%;
+      max-width: 300px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+
     /* GRID */
     .grid {
       display: grid;
@@ -71,6 +87,11 @@
 
 <body>
 
+  <!-- Search Bar -->
+  <div class="search-container">
+    <input type="text" id="searchInput" placeholder="Search for a game..." onkeyup="searchGames()">
+  </div>
+
   <div class="grid">
 
     <!-- PROXY (NO IMAGE) -->
@@ -95,30 +116,30 @@
     </div>
 
     <!-- DuckLife1 -->
-  <div class="card" onclick="openGame('/games/ducklife1/index.html')">
-    <div class="thumb">
-      <img src="/games/ducklife1/cover.png" alt="Duck Life 1">
+    <div class="card" onclick="openGame('/games/ducklife1/index.html')">
+      <div class="thumb">
+        <img src="/games/ducklife1/cover.png" alt="Duck Life 1">
+      </div>
+      <div class="title">Duck Life 1</div>
     </div>
-    <div class="title">Duck Life 1</div>
-  </div>
 
-      <!-- DuckLife2 -->
-  <div class="card" onclick="openGame('/games/ducklife2/index.html')">
-    <div class="thumb">
-      <img src="/games/ducklife2/cover.png" alt="Duck Life 2">
+    <!-- DuckLife2 -->
+    <div class="card" onclick="openGame('/games/ducklife2/index.html')">
+      <div class="thumb">
+        <img src="/games/ducklife2/cover.png" alt="Duck Life 2">
+      </div>
+      <div class="title">Duck Life 2</div>
     </div>
-    <div class="title">Duck Life 2</div>
-  </div>
 
+    <!-- DuckLife3 -->
     <div class="card" onclick="openGame('/games/ducklife3/index.html')">
-  <div class="thumb">
-    <img src="/games/ducklife3/cover.png" alt="Duck Life 3">
+      <div class="thumb">
+        <img src="/games/ducklife3/cover.png" alt="Duck Life 3">
+      </div>
+      <div class="title">Duck Life 3</div>
+    </div>
+
   </div>
-  <div class="title">Duck Life 3</div>
-</div>
-
-
-</div>
 
   <script>
     function openGame(path) {
@@ -130,8 +151,22 @@
       const encoded = encodeURIComponent(url);
       window.open(`/play.html?url=${encoded}`, "_blank");
     }
+
+    function searchGames() {
+      const input = document.getElementById('searchInput').value.toLowerCase();
+      const cards = document.querySelectorAll('.card');
+
+      cards.forEach(card => {
+        const title = card.querySelector('.title').textContent.toLowerCase();
+        
+        if (title.includes(input)) {
+          card.style.display = ''; // Show card if it matches
+        } else {
+          card.style.display = 'none'; // Hide card if it doesn't match
+        }
+      });
+    }
   </script>
 
 </body>
 </html>
-
