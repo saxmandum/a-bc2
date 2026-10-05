@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Loading...</title>
+  <title>Loading Game...</title>
   <style>
     html, body {
       margin: 0;
       padding: 0;
       height: 100%;
       overflow: hidden;
-      background: black;
+      background: #000;
     }
 
     iframe {
@@ -22,18 +22,34 @@
 
 <body>
   <iframe id="frame"
-    sandbox="allow-scripts allow-pointer-lock allow-same-origin"
+    allow="autoplay; fullscreen; camera; microphone; clipboard-read; clipboard-write; gamepad"
+    sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-pointer-lock allow-downloads"
     allowfullscreen>
   </iframe>
 
   <script>
     const params = new URLSearchParams(window.location.search);
     const url = params.get("url");
+    const name = params.get("name");
 
     if (url) {
+      // Set frame source
       document.getElementById("frame").src = url;
+
+      // Update tab title dynamically if game name is provided
+      if (name) {
+        document.title = decodeURIComponent(name);
+      } else {
+        // Fallback: extract title from URL path
+        const cleanName = url.split('/')[2] || "Play Game";
+        document.title = cleanName.charAt(0).toUpperCase() + cleanName.slice(1);
+      }
     } else {
-      document.body.innerHTML = "No game selected.";
+      document.body.style.color = "#fff";
+      document.body.style.display = "flex";
+      document.body.style.alignItems = "center";
+      document.body.style.justifyContent = "center";
+      document.body.innerHTML = "<h2>No game selected.</h2>";
     }
   </script>
 </body>
