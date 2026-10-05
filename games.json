@@ -1,0 +1,42 @@
+[
+  {
+    "title": "Proxy",
+    "isProxy": true,
+    "url": "https://ebn.s4r4.com/"
+  },
+  {
+    "title": "Balatro",
+    "path": "/games/balatro/index.html",
+    "cover": "/games/balatro/cover.png"
+  },
+  {
+    "title": "2048",
+    "path": "/games/2048/index.html",
+    "cover": "/games/2048/cover.png"
+  },
+  {
+    "title": "Duck Life 1",
+    "path": "/games/ducklife1/index.html",
+    "cover": "/games/ducklife1/cover.png"
+  },
+  {
+    "title": "Duck Life 2",
+    "path": "/games/ducklife2/index.html",
+    "cover": "/games/ducklife2/cover.png"
+  },
+  {
+    "title": "Duck Life 3",
+    "path": "/games/ducklife3/index.html",
+    "cover": "/games/ducklife3/cover.png"
+  },
+  {
+    "title": "Minecraft 1.8 (EaglercraftX)",
+    "path": "/games/minecraft-18/index.html",
+    "cover": "/games/minecraft-18/cover.png"
+  },
+  {
+    "title": "Minecraft 1.12 (EaglercraftX)",
+    "path": "/games/minecraft- 12/index.html",
+    "cover": "/games/minecraft- 12/cover.png"
+  }
+]
