@@ -97,81 +97,52 @@
     >
   </div>
 
-  <div class="grid">
-
-    <!-- PROXY -->
-    <div class="card proxy" onclick="openProxy()">
-      <span class="title" style="display:none;">Proxy</span>
-      Proxy
-    </div>
-
-    <!-- BALATRO -->
-    <div class="card" onclick="openGame('/games/balatro/index.html')">
-      <div class="thumb">
-        <img src="/games/balatro/cover.png" alt="Balatro">
-      </div>
-      <div class="title">Balatro</div>
-    </div>
-
-    <!-- 2048 -->
-    <div class="card" onclick="openGame('/games/2048/index.html')">
-      <div class="thumb">
-        <img src="/games/2048/cover.png" alt="2048">
-      </div>
-      <div class="title">2048</div>
-    </div>
-
-    <!-- Duck Life 1 -->
-    <div class="card" onclick="openGame('/games/ducklife1/index.html')">
-      <div class="thumb">
-        <img src="/games/ducklife1/cover.png" alt="Duck Life 1">
-      </div>
-      <div class="title">Duck Life 1</div>
-    </div>
-
-    <!-- Duck Life 2 -->
-    <div class="card" onclick="openGame('/games/ducklife2/index.html')">
-      <div class="thumb">
-        <img src="/games/ducklife2/cover.png" alt="Duck Life 2">
-      </div>
-      <div class="title">Duck Life 2</div>
-    </div>
-
-    <!-- Duck Life 3 -->
-    <div class="card" onclick="openGame('/games/ducklife3/index.html')">
-      <div class="thumb">
-        <img src="/games/ducklife3/cover.png" alt="Duck Life 3">
-      </div>
-      <div class="title">Duck Life 3</div>
-    </div>
-
-    <!-- Minecraft 1.8 -->
-    <div class="card" onclick="openGame('/games/minecraft-18/index.html')">
-      <div class="thumb">
-        <img src="/games/minecraft-18/cover.png" alt="Minecraft 1.8">
-      </div>
-      <div class="title">Minecraft 1.8 (EaglercraftX)</div>
-    </div>
-
-    <!-- Minecraft 1.12 (UNCHANGED) -->
-    <div class="card" onclick="openGame('/games/minecraft- 12/index.html')">
-      <div class="thumb">
-        <img src="/games/minecraft- 12/cover.png" alt="Minecraft 1.12">
-      </div>
-      <div class="title">Minecraft 1.12 (EaglercraftX)</div>
-    </div>
-
-  </div>
+  <div class="grid" id="gameGrid"></div>
 
   <script>
+    let allGames = [];
+
+    // Fetch game data from JSON
+    fetch('games.json')
+      .then(res => res.json())
+      .then(data => {
+        allGames = data;
+        renderGames(allGames);
+      })
+      .catch(err => console.error("Error loading games.json:", err));
+
+    function renderGames(games) {
+      const grid = document.getElementById('gameGrid');
+      grid.innerHTML = '';
+
+      games.forEach(game => {
+        const card = document.createElement('div');
+        card.className = 'card';
+
+        if (game.isProxy) {
+          card.classList.add('proxy');
+          card.textContent = game.title;
+          card.onclick = () => openProxy(game.url);
+        } else {
+          card.onclick = () => openGame(game.path);
+          card.innerHTML = `
+            <div class="thumb">
+              <img src="${game.cover}" alt="${game.title}">
+            </div>
+            <div class="title">${game.title}</div>
+          `;
+        }
+
+        grid.appendChild(card);
+      });
+    }
+
     function openGame(path) {
       window.open(`/play.html?url=${encodeURIComponent(path)}`, "_blank");
     }
 
-    function openProxy() {
-      const url = "https://ebn.s4r4.com/";
+    function openProxy(url) {
       const win = window.open("", "_blank");
-
       win.document.write(`
         <!DOCTYPE html>
         <html>
@@ -196,19 +167,15 @@
         </body>
         </html>
       `);
-
       win.document.close();
     }
 
     function searchGames() {
-      const input = document.getElementById('searchInput').value.toLowerCase();
-      const cards = document.querySelectorAll('.card');
-
-      cards.forEach(card => {
-        const titleEl = card.querySelector('.title');
-        const title = titleEl ? titleEl.textContent.toLowerCase() : '';
-        card.style.display = title.includes(input) ? '' : 'none';
-      });
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      const filtered = allGames.filter(game => 
+        game.title.toLowerCase().includes(query)
+      );
+      renderGames(filtered);
     }
   </script>
 
